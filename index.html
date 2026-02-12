@@ -1,355 +1,482 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Be My Valentine 💖</title>
-
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg1:#ffd6e7;
-      --bg2:#fff1f6;
-      --card:#ffffffcc;
-      --text:#4a2b3a;
-      --yes:#ff4d6d;
-      --yesHover:#ff2f5a;
-      --no:#7a7a7a;
-      --shadow: 0 12px 30px rgba(0,0,0,.12);
-      --radius: 22px;
-    }
-
-    *{ box-sizing: border-box; }
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: "Quicksand", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding: 18px;
-      overflow:hidden;
-      background: radial-gradient(circle at 20% 20%, var(--bg2), transparent 60%),
-                  radial-gradient(circle at 80% 30%, #ffe3ef, transparent 55%),
-                  linear-gradient(135deg, var(--bg1), var(--bg2));
-    }
-
-    /* Floating hearts background */
-    .hearts{
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow:hidden;
-      z-index:0;
-    }
-    .heart{
-      position:absolute;
-      bottom:-50px;
-      font-size: 18px;
-      opacity:.6;
-      animation: floatUp linear infinite;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
-    }
-    @keyframes floatUp{
-      from { transform: translateY(0) translateX(0) rotate(0deg); }
-      to   { transform: translateY(-120vh) translateX(40px) rotate(20deg); }
-    }
-
-    /* Main card */
-    .card{
-      width: min(520px, 100%);
-      background: var(--card);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,.65);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 28px 22px;
-      text-align:center;
-      position:relative;
-      z-index:1;
-    }
-
-    h1{
-      font-family: "Pacifico", cursive;
-      font-weight: 400;
-      font-size: clamp(30px, 5vw, 44px);
-      margin: 6px 0 10px;
-    }
-
-    p{
-      margin: 0 0 18px;
-      font-size: 16px;
-      opacity: .9;
-      line-height: 1.5;
-    }
-
-    .buttons{
-      display:flex;
-      gap: 12px;
-      justify-content:center;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    button{
-      border:0;
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
-      box-shadow: 0 10px 18px rgba(0,0,0,.12);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    #yesBtn{
-      background: var(--yes);
-      color: white;
-      min-width: 140px;
-    }
-    #yesBtn:hover{ background: var(--yesHover); transform: translateY(-2px) scale(1.02); }
-    #yesBtn:active{ transform: translateY(0px) scale(.98); }
-
-    #noBtn{
-      background: #ffffff;
-      color: var(--no);
-      min-width: 140px;
-      border: 2px solid rgba(0,0,0,.08);
-    }
-    #noBtn:hover{ transform: translateY(-2px); }
-
-    .hint{
-      margin-top: 14px;
-      font-size: 13px;
-      opacity: .75;
-    }
-
-    /* Message */
-    .message{
-      margin-top: 18px;
-      font-size: 18px;
-      font-weight: 700;
-      display:none;
-    }
-
-    /* Confetti container */
-    .confetti{
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 2;
-    }
-    .confetti-piece{
-      position:absolute;
-      top:-10px;
-      width: 10px;
-      height: 14px;
-      opacity: .9;
-      transform: rotate(0deg);
-      animation: fall 1.8s linear forwards;
-      border-radius: 3px;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.10));
-    }
-    @keyframes fall{
-      to { transform: translateY(110vh) rotate(720deg); opacity: 1; }
-    }
-
-    /* The NO button becomes absolutely positioned when it starts escaping */
-    #noBtn.fleeing{
-      position: fixed; /* relative to viewport (so it can move anywhere) */
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: left .18s ease, top .18s ease;
-      z-index: 3;
-    }
-
-    /* Small screen tweaks */
-    @media (max-width: 420px){
-      .card{ padding: 24px 16px; }
-      button{ width: 100%; }
-      #noBtn.fleeing{ width: 170px; } /* keep it clickable-looking while fleeing */
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Chroma Juice – premium natural juice with a modern 3D hero landing page." />
+  <title>Chroma Juice</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <!-- Background hearts -->
-  <div class="hearts" aria-hidden="true" id="hearts"></div>
+  <!-- Background effects -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg__mesh"></div>
+    <div class="bg__grain"></div>
+    <div class="bg__vignette"></div>
+  </div>
 
-  <!-- Confetti overlay -->
-  <div class="confetti" aria-hidden="true" id="confetti"></div>
+  <!-- Mobile menu overlay -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+      <div class="drawer__top">
+        <a class="brand brand--small" href="#home">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__name">Chroma</span>
+        </a>
 
-  <main class="card">
-    <h1>💖 Will you be my Valentine? 💖 <br> 💖 Douae 💖</h1>
-   
-    <p>
-      I have a tiny question… and the correct answer is obviously
-      <strong>YES</strong> 😄💘
-    </p>
+        <button class="icon-btn" id="closeDrawer" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.3 5.7a1 1 0 0 0-1.4 0L12 10.6 7.1 5.7a1 1 0 1 0-1.4 1.4L10.6 12l-4.9 4.9a1 1 0 1 0 1.4 1.4l4.9-4.9 4.9 4.9a1 1 0 0 0 1.4-1.4L13.4 12l4.9-4.9a1 1 0 0 0 0-1.4z"/></svg>
+        </button>
+      </div>
 
-    <div class="buttons">
-      <button id="yesBtn" type="button">YES 💘</button>
-      <button id="noBtn" type="button">NO 🙈</button>
+      <nav class="drawer__nav">
+        <a href="#home" class="drawer__link">Home</a>
+        <a href="#products" class="drawer__link">Products</a>
+        <a href="#about" class="drawer__link">About</a>
+        <a href="#contact" class="drawer__link">Contact</a>
+      </nav>
+
+      <div class="drawer__cta">
+        <a class="btn btn--primary btn--full" href="#products">
+          Shop Now
+          <span class="btn__icon" aria-hidden="true">→</span>
+        </a>
+        <p class="drawer__note">Call us: <a href="tel:+18005555555">+1 (800) 555-5555</a></p>
+      </div>
     </div>
 
-    <div class="message" id="msg">Yay! I knew you’d say yes 💘</div>
-    <div class="hint">Tip: Try to click “NO”… if you can 😈</div>
+    <button class="drawer__backdrop" id="drawerBackdrop" aria-label="Close menu"></button>
+  </div>
+
+  <!-- Header / Nav -->
+  <header class="header" id="home">
+    <div class="container header__inner">
+      <a class="brand" href="#home" aria-label="Chroma Juice home">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <span class="brand__name">Chroma</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav__link" href="#home">Home</a>
+        <a class="nav__link" href="#products">Products</a>
+        <a class="nav__link" href="#about">About</a>
+        <a class="nav__link" href="#contact">Contact</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="header__phone" href="tel:+18005555555" aria-label="Call +1 (800) 555-5555">
+          +1 (800) 555-5555
+        </a>
+
+        <a class="btn btn--primary" href="#products">
+          Shop Now
+          <span class="btn__icon" aria-hidden="true">→</span>
+        </a>
+
+        <button class="icon-btn icon-btn--menu" id="openDrawer" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm1 4a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <!-- Left copy -->
+        <div class="hero__copy reveal">
+          <p class="kicker">Premium Juice Collection</p>
+          <h1 class="hero__title">
+            Chroma <span class="hero__title--soft">Juice</span>
+          </h1>
+          <p class="hero__text">
+            A bright, clean blend made from real fruit — crafted for a smooth taste,
+            fast delivery, and a premium feel in every sip.
+          </p>
+
+          <div class="badges" aria-label="Product highlights">
+            <span class="badge">100% Natural</span>
+            <span class="badge">No Sugar Added</span>
+            <span class="badge">Cold-Pressed</span>
+          </div>
+
+          <div class="hero__buttons">
+            <a class="btn btn--primary" href="#products">
+              Buy Now
+              <span class="btn__icon" aria-hidden="true">→</span>
+            </a>
+            <a class="btn btn--ghost" href="#about">Learn More</a>
+          </div>
+
+          <p class="hero__note">
+            Ingredients: orange, carrot, mango • 330ml • best served chilled
+          </p>
+        </div>
+
+        <!-- Center visual -->
+        <div class="hero__visual reveal" aria-label="Product preview">
+          <div class="parallax" data-parallax>
+            <!-- Accent shapes -->
+            <div class="accent accent--slice" aria-hidden="true"></div>
+            <div class="accent accent--leaf" aria-hidden="true"></div>
+
+            <!-- Bottle SVG (placeholder but premium) -->
+            <div class="bottle" role="img" aria-label="Chroma Juice bottle">
+              <svg class="bottle__svg" viewBox="0 0 360 640" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="glass" x1="0" x2="1">
+                    <stop offset="0" stop-color="rgba(255,255,255,0.18)"/>
+                    <stop offset="0.55" stop-color="rgba(255,255,255,0.06)"/>
+                    <stop offset="1" stop-color="rgba(255,255,255,0.16)"/>
+                  </linearGradient>
+                  <linearGradient id="juice" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#ffb54a"/>
+                    <stop offset="0.6" stop-color="#ff7a2f"/>
+                    <stop offset="1" stop-color="#ff5b2b"/>
+                  </linearGradient>
+                  <linearGradient id="cap" x1="0" x2="1">
+                    <stop offset="0" stop-color="#f2f2f2"/>
+                    <stop offset="1" stop-color="#cfcfcf"/>
+                  </linearGradient>
+                  <filter id="shadow" x="-40%" y="-40%" width="180%" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="18" result="blur"/>
+                    <feOffset dx="0" dy="22" result="off"/>
+                    <feColorMatrix in="off" type="matrix"
+                      values="0 0 0 0 0
+                              0 0 0 0 0
+                              0 0 0 0 0
+                              0 0 0 .35 0" result="shadow"/>
+                    <feMerge>
+                      <feMergeNode in="shadow"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <!-- Drop shadow -->
+                <g filter="url(#shadow)">
+                  <!-- Bottle body -->
+                  <path d="M120 90c0-22 18-40 40-40h40c22 0 40 18 40 40v40c0 18 10 28 20 40 18 22 30 50 30 94v208c0 54-44 98-98 98h-84c-54 0-98-44-98-98V264c0-44 12-72 30-94 10-12 20-22 20-40V90z"
+                        fill="url(#glass)" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
+
+                  <!-- Juice inside -->
+                  <path d="M78 310c0-22 18-40 40-40h124c22 0 40 18 40 40v180c0 34-28 62-62 62H140c-34 0-62-28-62-62V310z"
+                        fill="url(#juice)" opacity="0.92"/>
+
+                  <!-- Highlights -->
+                  <path d="M118 120c0-18 12-34 28-40" stroke="rgba(255,255,255,0.5)" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+                  <path d="M118 190c0-24 10-42 24-58" stroke="rgba(255,255,255,0.35)" stroke-width="8" stroke-linecap="round" opacity="0.35"/>
+
+                  <!-- Label -->
+                  <rect x="102" y="360" width="156" height="120" rx="20" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.22)"/>
+                  <text x="180" y="412" text-anchor="middle" font-size="24" fill="rgba(255,255,255,0.92)" font-family="system-ui, -apple-system, Segoe UI, Inter, Arial">
+                    Chroma
+                  </text>
+                  <text x="180" y="440" text-anchor="middle" font-size="22" fill="rgba(255,255,255,0.92)" font-family="system-ui, -apple-system, Segoe UI, Inter, Arial">
+                    Juice
+                  </text>
+                  <text x="180" y="468" text-anchor="middle" font-size="14" fill="rgba(255,255,255,0.75)" font-family="system-ui, -apple-system, Segoe UI, Inter, Arial">
+                    orange blend • 330ml
+                  </text>
+
+                  <!-- Cap -->
+                  <rect x="138" y="34" width="84" height="34" rx="12" fill="url(#cap)"/>
+                  <rect x="132" y="64" width="96" height="26" rx="10" fill="rgba(255,255,255,0.28)"/>
+                </g>
+              </svg>
+
+              <div class="bottle__glow" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right floating card -->
+        <aside class="hero__card reveal" aria-label="Featured product">
+          <div class="card glass">
+            <div class="card__top">
+              <div class="thumb" aria-hidden="true">
+                <span class="thumb__dot"></span>
+              </div>
+              <div class="card__meta">
+                <p class="card__name">Orange Smoothie</p>
+                <p class="card__desc">Bright citrus + mango notes</p>
+              </div>
+            </div>
+
+            <div class="card__row">
+              <p class="price">
+                <span class="price__value">$6.90</span>
+                <span class="price__sub">/ bottle</span>
+              </p>
+
+              <button class="btn btn--buy" type="button" aria-label="Add Orange Smoothie to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4zm3.5 16a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm7 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                </svg>
+                Buy
+              </button>
+            </div>
+
+            <div class="card__hint">
+              Free delivery over $25 • 24h dispatch
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Made for taste. Built for speed.</h2>
+          <p class="section__text">A premium experience from the first click to the last sip.</p>
+        </div>
+
+        <div class="grid3">
+          <article class="feature glass reveal">
+            <div class="feature__icon" aria-hidden="true">🍊</div>
+            <h3 class="feature__title">Fresh Ingredients</h3>
+            <p class="feature__text">Real fruit blends with clean flavor and balanced texture.</p>
+          </article>
+
+          <article class="feature glass reveal">
+            <div class="feature__icon" aria-hidden="true">🚚</div>
+            <h3 class="feature__title">Fast Delivery</h3>
+            <p class="feature__text">Quick checkout, reliable shipping, and cold packaging.</p>
+          </article>
+
+          <article class="feature glass reveal">
+            <div class="feature__icon" aria-hidden="true">✨</div>
+            <h3 class="feature__title">Premium Quality</h3>
+            <p class="feature__text">A smooth, vibrant taste with a high-end presentation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section" id="products">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Popular blends</h2>
+          <p class="section__text">Choose your color. Pick your mood.</p>
+        </div>
+
+        <div class="gallery">
+          <!-- Card 1 -->
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Citrus</div>
+              <div class="product__icon" aria-hidden="true">🍊</div>
+            </div>
+            <h3 class="product__name">Orange Glow</h3>
+            <p class="product__desc">Citrus-forward with a clean finish.</p>
+            <div class="product__row">
+              <span class="product__price">$6.90</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Orange Glow to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Tropical</div>
+              <div class="product__icon" aria-hidden="true">🥭</div>
+            </div>
+            <h3 class="product__name">Mango Rise</h3>
+            <p class="product__desc">Soft sweetness with bright aroma.</p>
+            <div class="product__row">
+              <span class="product__price">$7.50</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Mango Rise to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Green</div>
+              <div class="product__icon" aria-hidden="true">🍏</div>
+            </div>
+            <h3 class="product__name">Apple Mint</h3>
+            <p class="product__desc">Crisp taste with a cool lift.</p>
+            <div class="product__row">
+              <span class="product__price">$6.40</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Apple Mint to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Berry</div>
+              <div class="product__icon" aria-hidden="true">🫐</div>
+            </div>
+            <h3 class="product__name">Berry Bloom</h3>
+            <p class="product__desc">Smooth berries with gentle acidity.</p>
+            <div class="product__row">
+              <span class="product__price">$7.10</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Berry Bloom to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Energy</div>
+              <div class="product__icon" aria-hidden="true">🥕</div>
+            </div>
+            <h3 class="product__name">Carrot Zest</h3>
+            <p class="product__desc">Balanced sweetness and depth.</p>
+            <div class="product__row">
+              <span class="product__price">$6.30</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Carrot Zest to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <article class="product glass reveal">
+            <div class="product__top">
+              <div class="product__badge">Light</div>
+              <div class="product__icon" aria-hidden="true">🍋</div>
+            </div>
+            <h3 class="product__name">Lemon Air</h3>
+            <p class="product__desc">Bright, fresh, and minimal.</p>
+            <div class="product__row">
+              <span class="product__price">$6.20</span>
+              <button class="icon-btn icon-btn--soft" aria-label="Add Lemon Air to cart">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h-2a1 1 0 0 0 0 2h1l1.2 10.2A3 3 0 0 0 10.2 19H18a1 1 0 1 0 0-2h-7.8a1 1 0 0 1-1-.9l-.1-1.1H18a3 3 0 0 0 2.9-2.2l1.1-4A2 2 0 0 0 20 6H8.1L8 5.2A1.2 1.2 0 0 0 7 4z"/></svg>
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">People love the glow</h2>
+          <p class="section__text">A few words from our customers.</p>
+        </div>
+
+        <div class="grid3">
+          <figure class="quote glass reveal">
+            <blockquote>“The smoothest juice I’ve had — the packaging feels premium too.”</blockquote>
+            <figcaption>— Lina, Rabat</figcaption>
+          </figure>
+          <figure class="quote glass reveal">
+            <blockquote>“Fast delivery and the flavor is super clean. I’m hooked.”</blockquote>
+            <figcaption>— Youssef, Casablanca</figcaption>
+          </figure>
+          <figure class="quote glass reveal">
+            <blockquote>“Looks like a luxury brand and tastes even better.”</blockquote>
+            <figcaption>— Sara, Tangier</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">FAQ</h2>
+          <p class="section__text">Quick answers to common questions.</p>
+        </div>
+
+        <div class="faq glass reveal" role="region" aria-label="Frequently asked questions">
+          <button class="faq__q" aria-expanded="false">
+            Are your juices 100% natural?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" hidden>
+            Yes — we focus on real ingredients and clean blends with minimal processing.
+          </div>
+
+          <button class="faq__q" aria-expanded="false">
+            How fast is delivery?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" hidden>
+            Most orders ship within 24 hours. Delivery time depends on your location.
+          </div>
+
+          <button class="faq__q" aria-expanded="false">
+            Do you add sugar?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" hidden>
+            No added sugar in our core collection. Fruit sweetness only.
+          </div>
+
+          <button class="faq__q" aria-expanded="false">
+            Can I subscribe monthly?
+            <span class="faq__icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq__a" hidden>
+            Yes — subscription is available for popular blends. (You can wire it to your checkout later.)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer class="footer" id="contact">
+      <div class="container footer__grid">
+        <div class="footer__brand reveal">
+          <a class="brand" href="#home">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span class="brand__name">Chroma</span>
+          </a>
+          <p class="footer__text">Premium juice, designed like a brand.</p>
+          <div class="social" aria-label="Social links">
+            <a class="social__link" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zm-5 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm6.2-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/></svg>
+            </a>
+            <a class="social__link" href="#" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L4.7 22H2l7.3-8.4L1.6 2h7l4.8 6.1L18.9 2zm-1.2 18h1.9L7.6 3.9H5.5L17.7 20z"/></svg>
+            </a>
+            <a class="social__link" href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.6 31.6 0 0 0 2 12a31.6 31.6 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 22 12a31.6 31.6 0 0 0-.4-4.8zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer__newsletter glass reveal" aria-label="Newsletter signup">
+          <h3 class="footer__title">Get new flavors first</h3>
+          <p class="footer__text">Monthly updates — no spam. Unsubscribe anytime.</p>
+
+          <form class="form" id="newsletterForm">
+            <label class="sr-only" for="email">Email</label>
+            <input id="email" name="email" class="input" type="email" placeholder="you@example.com" required />
+            <button class="btn btn--primary" type="submit">
+              Subscribe
+              <span class="btn__icon" aria-hidden="true">→</span>
+            </button>
+          </form>
+
+          <p class="form__msg" id="formMsg" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="container footer__bottom">
+        <p>© <span id="year"></span> Chroma Juice. All rights reserved.</p>
+        <a class="footer__top" href="#home">Back to top ↑</a>
+      </div>
+    </footer>
   </main>
 
-  <script>
-    /**
-     * Optional: tiny click sound (no external files).
-     * This uses the Web Audio API to generate a short "ding" on YES.
-     */
-    function playYesSound(){
-      try{
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = "sine";
-        o.frequency.value = 880; // A5
-        g.gain.value = 0.08;
-
-        o.connect(g);
-        g.connect(ctx.destination);
-
-        o.start();
-        // quick envelope
-        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18);
-        o.stop(ctx.currentTime + 0.18);
-      }catch(e){
-        // If blocked, silently ignore.
-      }
-    }
-
-    // ===== Floating hearts background =====
-    const heartsWrap = document.getElementById("hearts");
-    const heartEmojis = ["💖","💘","❤️","💕","🌹","💗"];
-    function spawnFloatingHeart(){
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
-
-      // random position & speed
-      const left = Math.random() * 100; // vw
-      const size = 14 + Math.random() * 18;
-      const duration = 6 + Math.random() * 8;
-
-      h.style.left = left + "vw";
-      h.style.fontSize = size + "px";
-      h.style.animationDuration = duration + "s";
-      h.style.opacity = (0.35 + Math.random() * 0.55).toFixed(2);
-
-      heartsWrap.appendChild(h);
-
-      // remove after animation finishes
-      setTimeout(() => h.remove(), duration * 1000);
-    }
-    // create hearts regularly
-    setInterval(spawnFloatingHeart, 450);
-    // initial burst
-    for(let i=0;i<12;i++) setTimeout(spawnFloatingHeart, i*120);
-
-    // ===== Confetti =====
-    const confettiWrap = document.getElementById("confetti");
-    function confettiBurst(){
-      const pieces = 120;
-      for(let i=0;i<pieces;i++){
-        const p = document.createElement("div");
-        p.className = "confetti-piece";
-
-        // random x, size, speed
-        const x = Math.random() * 100;
-        const w = 6 + Math.random() * 10;
-        const h = 8 + Math.random() * 16;
-        const delay = Math.random() * 0.35;
-        const duration = 1.2 + Math.random() * 1.4;
-
-        p.style.left = x + "vw";
-        p.style.width = w + "px";
-        p.style.height = h + "px";
-        p.style.animationDuration = duration + "s";
-        p.style.animationDelay = delay + "s";
-
-        // color variety (soft Valentine colors)
-        const colors = ["#ff4d6d","#ff8fab","#ffc2d1","#ffd6e0","#ffb3c6","#ff758f"];
-        p.style.background = colors[Math.floor(Math.random()*colors.length)];
-
-        confettiWrap.appendChild(p);
-
-        setTimeout(() => p.remove(), (delay + duration) * 1000 + 200);
-      }
-    }
-
-    // ===== Escaping NO button logic =====
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const msg = document.getElementById("msg");
-
-    /**
-     * Move the NO button to a random position inside the viewport.
-     * We keep it fully visible by clamping within window bounds.
-     */
-    function moveNoButton(){
-      // Ensure it becomes a "free" button that can move around the screen
-      noBtn.classList.add("fleeing");
-
-      const padding = 12; // keep away from screen edges
-      const rect = noBtn.getBoundingClientRect();
-
-      const maxX = window.innerWidth - rect.width - padding;
-      const maxY = window.innerHeight - rect.height - padding;
-
-      const x = Math.random() * (maxX - padding) + padding;
-      const y = Math.random() * (maxY - padding) + padding;
-
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top  = `${y}px`;
-    }
-
-    // Desktop: escape on hover
-    noBtn.addEventListener("mouseenter", moveNoButton);
-
-    // Mobile: escape on touch
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault(); // prevents "click" from triggering
-      moveNoButton();
-    }, { passive: false });
-
-    // Also escape if someone tries to click (just in case)
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      moveNoButton();
-    });
-
-    // YES behavior
-    yesBtn.addEventListener("click", () => {
-      playYesSound();
-      msg.style.display = "block";
-      confettiBurst();
-
-      // Optional: Make the NO button stop fleeing after YES is clicked
-      noBtn.removeEventListener("mouseenter", moveNoButton);
-      noBtn.style.opacity = 0.7;
-      noBtn.style.pointerEvents = "none";
-      noBtn.textContent = "Too late 😌";
-    });
-
-    // Keep NO button in bounds on resize
-    window.addEventListener("resize", () => {
-      if(noBtn.classList.contains("fleeing")){
-        moveNoButton();
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
